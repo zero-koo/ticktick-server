@@ -8,8 +8,6 @@ jobs:
     name: Deploy
     runs-on: ubuntu-latest
     environment: production
-    env:
-      DATABASE_URL: ${{ secrets.DATABASE_URL }}
 
     steps:
       - name: 코드 체크아웃
@@ -29,6 +27,8 @@ jobs:
       - name: 도커 이미지 빌드
         run: |
           docker build -t ticktick-server .
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
 
       - name: 도커 이미지에 태그 지정
         run: |
