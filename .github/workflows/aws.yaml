@@ -27,8 +27,6 @@ jobs:
       - name: 도커 이미지 빌드
         run: |
           docker build -t ticktick-server .
-        env:
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
 
       - name: 도커 이미지에 태그 지정
         run: |
@@ -110,4 +108,4 @@ jobs:
           script: |
             sudo docker stop ticktick-server || true
             sudo docker rm ticktick-server || true
-            sudo docker run -d -p 3000:3000 ${{ secrets.ECR_URI }}
+            sudo docker run -d -p 3000:3000 -e DATABASE_URL=${{ secrets.DATABASE_URL }} ${{ secrets.ECR_URI }}
